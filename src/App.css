@@ -1,0 +1,143 @@
+.app-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  position: relative;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -2px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px var(--primary-glow));
+}
+
+.theme-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  font-size: 1.5rem;
+  transition: var(--transition);
+}
+
+.theme-btn:hover {
+  transform: rotate(15deg) scale(1.1);
+  background: var(--primary);
+  color: white;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  z-index: 1;
+}
+
+.reset-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.danger-btn {
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  color: #f87171;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.danger-btn:hover {
+  background: #f87171;
+  color: white;
+  box-shadow: 0 0 20px rgba(248, 113, 113, 0.4);
+}
+
+.footer {
+  text-align: center;
+  margin-top: 4rem;
+  opacity: 0.4;
+  font-size: 0.85rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@media (max-width: 640px) {
+  .app-container {
+    padding: 2rem 1rem;
+    gap: 2rem;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  .theme-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Empty State Styling */
+.empty-hero {
+  padding: 5rem 2rem;
+  border-radius: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.empty-icon-animated {
+  font-size: 5rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
