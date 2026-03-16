@@ -15,6 +15,15 @@ const TaskCard = ({ task, updateTask, deleteTask, toggleComplete }) => {
     High: 'var(--priority-high)'
   };
 
+  const formatTime12Hour = (time24) => {
+    if (!time24) return "";
+    const [hours, minutes] = time24.split(':');
+    const h = parseInt(hours, 10);
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12 = h % 12 || 12;
+    return `${h12}:${minutes} ${ampm}`;
+  };
+
   const isDueToday = task.dueDate && new Date(task.dueDate).toDateString() === new Date().toDateString();
   const isOverdue = task.dueDate && !task.completed && new Date(task.dueDate) < new Date(new Date().setHours(0,0,0,0));
 
@@ -68,7 +77,7 @@ const TaskCard = ({ task, updateTask, deleteTask, toggleComplete }) => {
               {task.dueDate && (
                 <div className="meta-item">
                   📅 {new Date(task.dueDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-                  {task.dueTime && ` • ${task.dueTime}`}
+                  {task.dueTime && ` • ${formatTime12Hour(task.dueTime)}`}
                 </div>
               )}
               
