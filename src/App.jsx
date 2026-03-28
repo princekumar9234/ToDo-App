@@ -3,6 +3,7 @@ import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 import FilterBar from './components/FilterBar';
 import ProgressTracker from './components/ProgressTracker';
+import ChallengeTracker from './components/ChallengeTracker';
 import './index.css';
 import './App.css';
 import './Components.css';
@@ -11,6 +12,11 @@ const App = () => {
   const [tasks, setTasks] = useState(() => {
     const savedTasks = localStorage.getItem('tasks');
     return savedTasks ? JSON.parse(savedTasks) : [];
+  });
+
+  const [challenges, setChallenges] = useState(() => {
+    const savedChallenges = localStorage.getItem('challenges');
+    return savedChallenges ? JSON.parse(savedChallenges) : [];
   });
 
   const [darkMode, setDarkMode] = useState(() => {
@@ -26,9 +32,32 @@ const App = () => {
   }, [tasks]);
 
   useEffect(() => {
+    localStorage.setItem('challenges', JSON.stringify(challenges));
+  }, [challenges]);
+
+  useEffect(() => {
     document.body.className = darkMode ? 'dark' : 'light';
     localStorage.setItem('theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
+
+  // System Directive: Daily Reset Mechanism
+  useEffect(() => {
+    const today = new Date().toDateString();
+    const lastCheckedDate = localStorage.getItem('lastCheckedDate');
+
+    if (lastCheckedDate && lastCheckedDate !== today) {
+      // It's a new day! Reset all completed tasks to pending
+      setTasks(prevTasks => {
+        const resetTasks = prevTasks.map(t => ({ ...t, completed: false }));
+        localStorage.setItem('tasks', JSON.stringify(resetTasks));
+        return resetTasks;
+      });
+    }
+    
+    if (lastCheckedDate !== today) {
+      localStorage.setItem('lastCheckedDate', today);
+    }
+  }, []);
 
   const addTask = (task) => {
     setTasks([task, ...tasks]);
@@ -104,6 +133,8 @@ const App = () => {
       </header>
 
       <main className="fade-in">
+        <ChallengeTracker challenges={challenges} setChallenges={setChallenges} />
+
         <TaskForm addTask={addTask} />
         
         <TaskList 
